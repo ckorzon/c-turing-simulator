@@ -11,11 +11,6 @@ typedef struct Card {
     cardrow rows[2];
 } card;
 
-// [card, card, card...]
-// [card([write, shift, next], [write, shift, next]), card(...), card...]
-
-// [[[], []], []]
-
 void printCardRow(bool n, cardrow crdrow) {
     printf("|%d : %d %d %d|\n", n, crdrow.writeVal, crdrow.shiftRight, crdrow.nextCard);
 }
