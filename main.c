@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 typedef struct CardRow {
@@ -24,11 +25,25 @@ void printCard(int crdNum, card crd) {
 
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     // Simulate a Binary turing machine with N states
     // Components = tape, cards/states, 
 
-    // Tape => boolean tape[900];
+    int tapeLength;
+    switch(argc) {
+        case 1 :
+            tapeLength = 500;
+            break;
+        case 2 :
+            tapeLength = atoi(argv[1]);
+            printf("Using tape with length: %d \n", tapeLength);
+            break;
+        default:
+            printf("ERROR: Invalid number of arguments.\n");
+            return 1;
+    }
+
+    bool tape[tapeLength];
 
     // Card Syntax:
     // 0 : 110 (if read 0: write 1, move right, halt)
