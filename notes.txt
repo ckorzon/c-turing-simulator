@@ -1,0 +1,2 @@
+Compile Command:
+gcc main.c -o turing-machine-sim.exe
