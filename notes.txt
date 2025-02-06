@@ -1,2 +1,5 @@
 Compile Command:
-gcc main.c turingmachine.c card.c -o turing-machine-sim.exe
+gcc main.c turingmachine.c card.c deck.c -o turing-machine-sim.exe
+
+Example Run Command:
+.\turing-machine-sim.exe ExampleCards.txt 100

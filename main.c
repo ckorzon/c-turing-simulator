@@ -2,8 +2,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "turingmachine.h"
+#include "deck.h"
+#include "cardsfile.h"
 
 const int MAX_ITERATIONS = 1000;
+const int DEFAULT_TAPE_LENGTH = 500;
+
 
 int main(int argc, char* argv[]) {
     // Simulate a Binary turing machine with N states
@@ -13,42 +17,41 @@ int main(int argc, char* argv[]) {
     // 1 : 101 (if read 1: write 1, move left, go to card 1)
 
     int tapeLength;
+    deck* turingDeck;
     switch(argc) {
-        case 1 :
-            tapeLength = 500;
+        case 1:
+            printf("ERROR: Must provide path to cards file.\n");
+            return 1;
+        case 2:
+            // program.exe [cards_file]
+            turingDeck = readCardFile(argv[1]);
             break;
-        case 2 :
-            tapeLength = atoi(argv[1]);
-            printf("Using tape with length: %d \n", tapeLength);
-            break;
+        case 3 :
+            // program.exe [cards_file] [tape_length]
+            turingDeck = readCardFile(argv[1]);
+            tapeLength = atoi(argv[2]);
+            break;            
         default:
             printf("ERROR: Invalid number of arguments.\n");
             return 1;
     }
+    printf("Using tape with length: %d \n", tapeLength);
+    printf("Using Deck with %d cards.\n", turingDeck->size);
 
-    // Declare cards
-    cardrow zeroRow = { 1, 0, 2 };
-    cardrow oneRow = { 0, 0, 2 };
-    card firstCard = { { zeroRow, oneRow } };
+    printCard(0, &turingDeck->cards[0]);
+    printCard(1, &turingDeck->cards[1]);
 
-    cardrow zeroRowB = { 1, 1, 1 };
-    cardrow oneRowB = { 0, 1, 0 };
-    card secondCard = { { zeroRowB, oneRowB } };
 
-    card cards[] = { firstCard, secondCard };
+    // // Construct the turing machine
+    // turingmachine tm;
+    // initializeTuringMachine(&tm, turingDeck, tapeLength, MAX_ITERATIONS);
 
-    // Construct the turing machine
-    turingmachine tm;
-    initializeTuringMachine(&tm, cards, tapeLength, MAX_ITERATIONS);
-
-    // Run the turing machine
-    runTuringMachine(&tm);
+    // // Run the turing machine
+    // runTuringMachine(&tm);
 
     // Deconstruct to free memory
-    dismantleTuringMachine(&tm);
+    // destroyTuringMachine(&tm);
+    destroyDeck(turingDeck);
 
-    // TODO: Take a list of numbers from user and convert to set of cards.
-    // TODO: OR read cards from a file
-    
     return 0;
 }
