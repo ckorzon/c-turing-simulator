@@ -11,7 +11,7 @@ typedef struct CardRow {
 } cardrow;
 
 typedef struct Card {
-    cardrow* rows[2];
+    cardrow rows[2];
 } card;
 
 // cardrow* constructCardRow(bool writeVal, bool shiftRight, int nextCard);

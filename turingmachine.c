@@ -42,7 +42,6 @@ void destroyTuringMachine(turingmachine *tm) {
 
 void followCardInstructions(turingmachine *tm, cardrow *operation) {
     // Write the next value per card row instructions
-    // TODO: We crash here because writeVal is NULL
     tm->tape[tm->tapeIndex] = operation->writeVal;
     int nextPosition = tm->tapeIndex + (2 * (operation->shiftRight) - 1);
     printf("> Wrote %d at position %d. Next position = %d, next card = %d.\n", operation->writeVal, tm->tapeIndex, nextPosition, operation->nextCard);
@@ -68,13 +67,13 @@ void turingIterate(turingmachine *tm) {
     // * Note: We're heavily taking advantage of C's bool type equivalence to 0/1
     // * true => 1, false => 0
     // Collect the current card instruction row, throw error if it can't be retrieved
-    cardrow* instructionRow = currentCard->rows[readVal];
-    if (instructionRow == NULL) {
+    cardrow instructionRow = currentCard->rows[readVal];
+    if (&instructionRow == NULL) {
         printf("ERROR: Card Row %d is empty for card %d.\n", readVal, tm->cardIndex);
         exit(1);
     }
     // Perform the operation per the card's instructions
-    followCardInstructions(tm, instructionRow);
+    followCardInstructions(tm, &instructionRow);
 }
 
 void runTuringMachine(turingmachine *tm) {

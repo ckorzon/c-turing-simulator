@@ -7,7 +7,7 @@
 typedef struct Deck {
     int capacity;
     int size;
-    card* cards;
+    card** cards;
 } deck;
 
 deck* constructDeck(int initialCapacity);

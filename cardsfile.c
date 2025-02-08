@@ -12,7 +12,6 @@ deck* readCardFile(char* filePath) {
 
     // Initialize Deck
     deck *deck = constructDeck(1);
-    int nextCard = 0;
 
     // Create slots for card values
     int cardValsArray[6];
@@ -56,7 +55,7 @@ deck* readCardFile(char* filePath) {
         // All slots besides 3rd and 6th must have a value of 0 or 1. Slots 3 & 6 are card numbers, and can be any positive integer.
         if (currentSlot != 2 && currentSlot != 5 && slotVal != 0 && slotVal != 1) {
             printf("Invalid card value read!\n");
-            printf("Value = '%d', Card # %d Position %d.\n", slotVal, nextCard, currentSlot);
+            printf("Value = '%d', Card # %d Position %d.\n", slotVal, deck->size-1, currentSlot);
             exit(1);
         }
 
@@ -70,8 +69,8 @@ deck* readCardFile(char* filePath) {
             card* c = constructCard();
             
             // Populate card rows
-            setCardRow(c, 0, cardValsArray[0], cardValsArray[1], cardValsArray[2]);
-            setCardRow(c, 1, cardValsArray[3], cardValsArray[4], cardValsArray[5]);
+            setCardRow(c, 0, (bool) cardValsArray[0], (bool) cardValsArray[1], cardValsArray[2]);
+            setCardRow(c, 1, (bool) cardValsArray[3], (bool) cardValsArray[4], cardValsArray[5]);
 
             // Add card to set
             addCard(deck, c);

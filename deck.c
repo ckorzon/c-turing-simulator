@@ -15,7 +15,7 @@ deck* constructDeck(int initialCapacity) {
 
     // Allocate memory for the cards
     newDeck->capacity = initialCapacity;
-    newDeck->cards = malloc(initialCapacity * sizeof(card));
+    newDeck->cards = malloc(initialCapacity * sizeof(card*));
 
     newDeck->size = 0;
     return newDeck;
@@ -34,17 +34,16 @@ void addCard(deck* deck, card* newCard) {
     }
 
     // Add card to deck and update size
-    // TODO: Double check that we're legally adding cards to the deck
-    deck->cards[newLength] = *newCard;
+    deck->cards[newLength-1] = newCard;
     deck->size = newLength;
 }
 
 void expandDeckCapacity(deck* deck, int capacityFactor) {
 
     printf("Expanding deck capacity...\n");
-
     deck->capacity = deck->capacity * capacityFactor;
-    card* newCardsList = (card*) realloc(deck->cards, deck->capacity * sizeof(card));
+    card** newCardsList = (card**) realloc(deck->cards, deck->capacity * sizeof(card*));
+    printf("Deck capacity expanded to %d.\n", deck->capacity);
 
     if (newCardsList == NULL) {
         // Memory allocation failed, abort mission.
